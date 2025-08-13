@@ -88,13 +88,14 @@ export class MesonExporter extends Exporter {
 			if (file.options && file.options.nocompile) {
 				return false;
 			}
-			
+
 			for (let exclude of project.excludes) {
 				if (project.matches(file.file, exclude)) {
+          console.log(`Excluding file ${file.file} due to exclude pattern: ${exclude}`);
 					return false;
 				}
 			}
-			
+
 			const ext = path.extname(file.file).toLowerCase();
 			let validExtensions = ['.c', '.cpp', '.cc', '.cxx'];
 			if (platform === Platform.iOS || platform === Platform.OSX || platform === Platform.tvOS) {
@@ -139,7 +140,7 @@ export class MesonExporter extends Exporter {
 		}
 
     if (platform === Platform.iOS || platform === Platform.OSX || platform === Platform.tvOS) {
-      this.p('add_languages(\'objc\')');
+      this.p('add_languages(\'objc\', native: false)');
       this.p();
 
       if (defineArgs.length > 0) {
@@ -164,7 +165,15 @@ export class MesonExporter extends Exporter {
 			this.p();
 		}
 
-		// Handle Metal shader compilation for Apple platforms
+		if (project.getSubprojects().length > 0) {
+			this.p('subproject_targets = [');
+			for (const subproject of project.getSubprojects()) {
+				this.p('  \'' + subproject + '\',', 1);
+			}
+			this.p(']');
+			this.p();
+		}
+
 		if ((platform === Platform.iOS || platform === Platform.OSX || platform === Platform.tvOS) && metalFiles.length > 0) {
 			this.p('metal_compiler = find_program(\'xcrun\')');
 			this.p();
@@ -199,7 +208,7 @@ export class MesonExporter extends Exporter {
 
 		let targetArgs = [];
 		if (allFiles.length > 0) {
-			targetArgs.push('sources: target_files');
+			targetArgs.push('target_files');
 		}
 
 		if (includeDirs.length > 0) {
@@ -220,6 +229,10 @@ export class MesonExporter extends Exporter {
 			targetArgs.push('dependencies : dependencies');
 		}
 
+		if (project.getSubprojects().length > 0) {
+			targetArgs.push('link_with : subproject_targets');
+		}
+
     targetArgs.push('install : false');
 
 		if (project.linkerFlags.length > 0) {
@@ -230,11 +243,6 @@ export class MesonExporter extends Exporter {
 			this.p(']');
 			this.p();
 			targetArgs.push('link_args : link_args');
-		}
-
-		if ((platform === Platform.iOS || platform === Platform.OSX || platform === Platform.tvOS) && metalFiles.length > 0) {
-			const metallibTargets = metalFiles.map(file => path.basename(file.file, '.metal') + '_metallib');
-			targetArgs.push('link_with : [' + metallibTargets.join(', ') + ']');
 		}
 
 		if (options.lib) {
@@ -249,6 +257,7 @@ export class MesonExporter extends Exporter {
 			const comma = i === targetArgs.length - 1 ? '' : ',';
 			this.p('  ' + targetArgs[i] + comma, 1);
 		}
+    this.p('language: \'[c, cpp]\',', 1);
 		this.p(')');
 
 		this.closeFile();

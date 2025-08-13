@@ -212,6 +212,7 @@ export class Project {
 	systemDependendLibraries: any;
 	includes: {file: string, options: any}[];
 	excludes: string[];
+	subprojects: string[];
 	customs: {file: string, command: string, output: string}[];
 	cppStd: string = '';
 	cStd: string = '';
@@ -278,6 +279,7 @@ export class Project {
 		this.systemDependendLibraries = {};
 		this.includes = [];
 		this.excludes = [];
+		this.subprojects = [];
 		this.cppStd = '';
 		this.cStd = '';
 		this.kore = true;
@@ -714,6 +716,20 @@ export class Project {
 		for (let i = 0; i < arguments.length; ++i) {
 			this.addExclude(arguments[i]);
 		}
+	}
+
+	addSubproject(name: string) {
+		this.subprojects.push(name);
+	}
+
+	addSubprojects() {
+		for (let i = 0; i < arguments.length; ++i) {
+			this.addSubproject(arguments[i]);
+		}
+	}
+
+	getSubprojects() {
+		return this.subprojects;
 	}
 
 	addDefine(value: string, config: string = null) {
