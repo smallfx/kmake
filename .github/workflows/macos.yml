@@ -28,7 +28,6 @@ jobs:
         echo "SCCACHE_BUCKET=sccache"                                     >> $GITHUB_ENV
         echo "SCCACHE_ENDPOINT=http://robdangero.us:9000"                 >> $GITHUB_ENV
         echo "SCCACHE_REGION=auto"                                        >> $GITHUB_ENV
-        echo "$(brew --prefix llvm@21.1.0)/bin"                           >> $GITHUB_PATH
 
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
@@ -39,6 +38,7 @@ jobs:
         brew tap-new myuser/mytap
         brew extract --version=21.1.0 llvm myuser/mytap
         brew install myuser/mytap/llvm@21.1.0
+        echo "$(brew --prefix llvm@21.1.0)/bin"                           >> $GITHUB_PATH
 
     - name: Build
       env:
