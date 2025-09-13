@@ -36,9 +36,9 @@ jobs:
       run: |
         brew install sccache
         brew tap-new myuser/mytap
-        brew extract --version=21.1.0 llvm myuser/mytap
-        brew install myuser/mytap/llvm@21.1.0
-        echo "$(brew --prefix llvm@21.1.0)/bin"                           >> $GITHUB_PATH
+        brew extract --version=20.1.8 llvm myuser/mytap
+        brew install myuser/mytap/llvm@20.1.8
+        echo "$(brew --prefix llvm@20.1.8)/bin"                           >> $GITHUB_PATH
 
     - name: Build
       env:
