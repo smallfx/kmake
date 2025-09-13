@@ -34,11 +34,8 @@ jobs:
 
     - name: Brew
       run: |
-        brew install sccache
-        brew tap-new myuser/mytap
-        brew extract --version=20.1.8 llvm myuser/mytap
-        brew install myuser/mytap/llvm@20.1.8
-        echo "$(brew --prefix llvm@20.1.8)/bin"                           >> $GITHUB_PATH
+        brew install sccache llvm@20
+        echo "$(brew --prefix llvm@20)/bin"                           >> $GITHUB_PATH
 
     - name: Build
       env:
