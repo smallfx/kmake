@@ -31,7 +31,7 @@ export class MesonExporter extends Exporter {
 		}
 
 		if (includeDirs.length > 0) {
-			this.p('inc_dirs = include_directories(');
+			this.p('kore_inc_dirs = include_directories(');
 			for (let i = 0; i < includeDirs.length; i++) {
 				const inc = this.nicePath(from, to, includeDirs[i]);
 				const comma = i === includeDirs.length - 1 ? '' : ',';
@@ -58,7 +58,7 @@ export class MesonExporter extends Exporter {
 		}
 
 		if (project.cFlags.length > 0 || defineArgs.length > 0) {
-			this.p('c_args = [');
+			this.p('kore_c_args = [');
 
 			for (const flag of project.cFlags) {
 				this.p('  \'' + flag + '\',', 1);
@@ -73,7 +73,7 @@ export class MesonExporter extends Exporter {
 		}
 
 		if (project.cppFlags.length > 0 || defineArgs.length > 0) {
-			this.p('cpp_args = [');
+			this.p('kore_cpp_args = [');
 			for (const flag of project.cppFlags) {
 				this.p('  \'' + flag + '\',', 1);
 			}
@@ -144,13 +144,8 @@ export class MesonExporter extends Exporter {
       this.p();
 
       if (defineArgs.length > 0) {
-        this.p('objc_args = [');
+        this.p('kore_objc_args = [');
         this.p('  \'-fobjc-arc\',', 1);
-
-        for (const def of defineArgs) {
-          this.p('  \'' + def + '\',', 1);
-        }
-
         this.p(']');
         this.p();
       }
@@ -212,17 +207,17 @@ export class MesonExporter extends Exporter {
 		}
 
 		if (includeDirs.length > 0) {
-			targetArgs.push('include_directories : inc_dirs');
+			targetArgs.push('include_directories : kore_inc_dirs');
 		}
 
 		if (project.cFlags.length > 0 || defineArgs.length > 0) {
-			targetArgs.push('c_args : c_args');
+			targetArgs.push('c_args : kore_c_args');
 		}
 		if (project.cppFlags.length > 0 || defineArgs.length > 0) {
-			targetArgs.push('cpp_args : cpp_args');
+			targetArgs.push('cpp_args : kore_cpp_args');
 		}
 		if ((platform === Platform.iOS || platform === Platform.OSX || platform === Platform.tvOS) && defineArgs.length > 0) {
-			targetArgs.push('objc_args : objc_args');
+			targetArgs.push('objc_args : [kore_objc_args] + kore_c_args');
 		}
 
 		if (project.getLibs().length > 0) {
@@ -242,7 +237,7 @@ export class MesonExporter extends Exporter {
 			}
 			this.p(']');
 			this.p();
-			targetArgs.push('link_args : link_args');
+			targetArgs.push('link_args : kore_link_args');
 		}
 
 		if (options.lib) {
@@ -257,7 +252,6 @@ export class MesonExporter extends Exporter {
 			const comma = i === targetArgs.length - 1 ? '' : ',';
 			this.p('  ' + targetArgs[i] + comma, 1);
 		}
-    this.p('language: \'[c, cpp]\',', 1);
 		this.p(')');
 
 		this.closeFile();
