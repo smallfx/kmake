@@ -160,9 +160,9 @@ export class MesonExporter extends Exporter {
 			this.p();
 		}
 
-		if (project.getSubprojects().length > 0) {
+		if (project.subProjects.length > 0) {
 			this.p('subproject_targets = [');
-			for (const subproject of project.getSubprojects()) {
+			for (const subproject of project.subProjects) {
 				this.p('  \'' + subproject + '\',', 1);
 			}
 			this.p(']');
@@ -224,7 +224,7 @@ export class MesonExporter extends Exporter {
 			targetArgs.push('dependencies : dependencies');
 		}
 
-		if (project.getSubprojects().length > 0) {
+		if (project.subProjects.length > 0) {
 			targetArgs.push('link_with : subproject_targets');
 		}
 
