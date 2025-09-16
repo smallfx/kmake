@@ -1061,6 +1061,15 @@ export async function run(options: any, loglog: any): Promise<string> {
 		else if (isPlatform(options, Platform.OSX) || isPlatform(options, Platform.iOS) || isPlatform(options, Platform.tvOS)) {
 			let xcodeOptions = ['-configuration', options.debug ? 'Debug' : 'Release', '-project', solutionName + '.xcodeproj', '-quiet'];
 
+			if (isPlatform(options, Platform.iOS)) {
+				xcodeOptions.push('-sdk');
+				xcodeOptions.push('iphoneos');
+			}
+			else if (isPlatform(options, Platform.tvOS)) {
+				xcodeOptions.push('-sdk');
+				xcodeOptions.push('appletvos');
+			}
+
 			if (options.nosigning) {
 				xcodeOptions.push('CODE_SIGN_IDENTITY=""');
 				xcodeOptions.push('CODE_SIGNING_REQUIRED=NO');
