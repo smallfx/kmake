@@ -212,7 +212,6 @@ export class Project {
 	systemDependendLibraries: any;
 	includes: {file: string, options: any}[];
 	excludes: string[];
-	subprojects: string[];
 	customs: {file: string, command: string, output: string}[];
 	cppStd: string = '';
 	cStd: string = '';
