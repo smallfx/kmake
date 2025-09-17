@@ -57,6 +57,8 @@ function fromPlatform(platform: string): string {
 			return 'Xbox Series X|S';
 		case Platform.PS5:
 			return 'PlayStation 5';
+		case Platform.Switch2:
+			return 'Switch 2';
 		case Platform.FreeBSD:
 			return 'FreeBSD';
 		case Platform.Wasm:
@@ -633,7 +635,7 @@ async function exportKoremakeProject(from: string, to: string, platform: string,
 	else if (platform === Platform.Wasm) exporter = new WasmExporter(options);
 	else if (platform === Platform.Linux || platform === Platform.Pi) exporter = new LinuxExporter(options);
 	else if (platform === Platform.FreeBSD) exporter = new FreeBSDExporter(options);
-	else if (platform === Platform.PS4 || platform === Platform.XboxOne || platform === Platform.Switch || platform === Platform.XboxSeries || platform === Platform.PS5) {
+	else if (platform === Platform.PS4 || platform === Platform.XboxOne || platform === Platform.Switch || platform === Platform.XboxSeries || platform === Platform.PS5 || platform === Platform.Switch2) {
 		let libsdir = path.join(from.toString(), 'Backends');
 		if (Project.koreDir && !fs.existsSync(libsdir)) {
 			libsdir = path.join(Project.koreDir, '..', 'Backends');
@@ -1094,6 +1096,7 @@ export async function run(options: any, loglog: any): Promise<string> {
 			|| isPlatform(options, Platform.PS5)
 			|| isPlatform(options, Platform.XboxOne)
 			|| isPlatform(options, Platform.XboxSeries)
+			|| isPlatform(options, Platform.Switch2)
 			) {
 			let vsvars: string = null;
 			const bits = dothemath ? '64' : '32';
