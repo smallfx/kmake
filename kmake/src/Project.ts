@@ -286,6 +286,7 @@ export class Project {
 			xboxOne: {},
 			playStation4: {},
 			switch: {},
+			switch2: {},
 			xboxSeriesXS: {},
 			playStation5: {},
 			stadia: {},
