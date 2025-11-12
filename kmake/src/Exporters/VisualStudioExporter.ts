@@ -186,7 +186,8 @@ export class VisualStudioExporter extends Exporter {
 	}
 
 	open(project: Project, to: string) {
-		child_process.spawn('start', [path.resolve(to, project.getSafeName() + '.sln')], {detached: true, shell: true});
+		const ext = Options.visualStudioVersion === VisualStudioVersion.VS2026 ? 'slnx' : 'sln';
+		child_process.spawn('start', [path.resolve(to, project.getSafeName() + '.' + ext)], {detached: true, shell: true});
 	}
 
 	async exportSolution(project: Project, from: string, to: string, platform: string, vrApi: any, options: any) {
@@ -199,7 +200,7 @@ export class VisualStudioExporter extends Exporter {
 			this.p('<Platform Name="x64" />', 2);
 			this.p('<Platform Name="x86" />', 2);
 			this.p('</Configurations>', 1);
-			this.p('<Project Path="Project1.vcxproj" Id="' + project.getUuid().toString().toLowerCase() + '" />', 1);
+			this.p('<Project Path="' + project.getSafeName() + '.vcxproj" Id="' + project.getUuid().toString().toLowerCase() + '" />', 1);
 			this.p('</Solution>');
 			this.closeFile();
 		}
