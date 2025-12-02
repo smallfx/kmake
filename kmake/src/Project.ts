@@ -441,7 +441,18 @@ export class Project {
 					if (!path.isAbsolute(absolute)) {
 						absolute = path.join(subbasedir, file.file);
 					}
-					this.files.push({file: absolute.replace(/\\/g, '/'), options: file.options, projectDir: subbasedir, projectName: sub.name });
+					let subFileExist = false;
+					let subFile = absolute.replace(/\\/g, '/');
+					for (let mainFile of this.files) {
+						subFileExist = mainFile.file == subFile;
+						if (subFileExist) {
+							break;
+						}
+					}
+					if (subFileExist) {
+						continue;
+					}
+					this.files.push({file: subFile, options: file.options, projectDir: subbasedir, projectName: sub.name });
 				}
 				for (const custom of sub.customs) {
 					let absolute = custom.file;
