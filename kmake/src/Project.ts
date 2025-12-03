@@ -590,9 +590,11 @@ export class Project {
 				}
 
 				if (includeobject.file.startsWith('../')) {
+					let startNext = '../';
 					let start = '../';
-					while (includeobject.file.startsWith(start)) {
-						start += '../';
+					while (includeobject.file.startsWith(startNext)) {
+						start = startNext;
+						startNext += '../';
 					}
 					this.searchFiles(path.resolve(this.basedir, start));
 				}
