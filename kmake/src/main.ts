@@ -393,15 +393,11 @@ function compileShaders(invocations: Invocation[]): Promise<void> {
 
 function compileKong(project: Project, from: string, to: string, platform: string, dirs: string[]): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
-		let compilerPath = '';
+		let compilerPath = path.resolve(__dirname, 'kongruent' + exec.sys());
 
-		if (Project.koreDir !== '') {
-			compilerPath = path.resolve(__dirname, 'kongruent' + exec.sys());
-		}
-
-		let libsdir = path.join(from, 'Backends');
+		let libsdir = path.join(from, 'backends');
 		if (Project.koreDir && !fs.existsSync(libsdir)) {
-			libsdir = path.join(Project.koreDir, '..', 'Backends');
+			libsdir = path.join(Project.koreDir, '..', 'backends');
 		}
 		if (fs.existsSync(libsdir) && fs.statSync(libsdir).isDirectory()) {
 			let libdirs = fs.readdirSync(path.join(libsdir));
@@ -636,10 +632,17 @@ async function exportKoremakeProject(from: string, to: string, platform: string,
 	else if (platform === Platform.Linux || platform === Platform.Pi) exporter = new LinuxExporter(options);
 	else if (platform === Platform.FreeBSD) exporter = new FreeBSDExporter(options);
 	else if (platform === Platform.PS4 || platform === Platform.XboxOne || platform === Platform.Switch || platform === Platform.XboxSeries || platform === Platform.PS5 || platform === Platform.Switch2) {
-		let libsdir = path.join(from.toString(), 'Backends');
+		let libsdir = path.join(from.toString(), 'backends');
+		if (!fs.existsSync(libsdir)) {
+			libsdir = path.join(from.toString(), 'Backends');
+		}
+		if (Project.koreDir && !fs.existsSync(libsdir)) {
+			libsdir = path.join(Project.koreDir, '..', 'backends');
+		}
 		if (Project.koreDir && !fs.existsSync(libsdir)) {
 			libsdir = path.join(Project.koreDir, '..', 'Backends');
 		}
+
 		if (fs.existsSync(libsdir) && fs.statSync(libsdir).isDirectory()) {
 			let libdirs = fs.readdirSync(libsdir);
 			for (let libdir of libdirs) {
