@@ -16,7 +16,7 @@ jobs:
   build-x86_64:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
 
     - name: Setup latest Alpine Linux
       uses: jirutka/setup-alpine@v1
@@ -48,7 +48,7 @@ jobs:
         CC: "sccache clang"
         CXX: "sccache clang++"
         LD: ld.lld
-        AR: llvm-ar
+        AR: llvm20-ar
       run: |
         export CFLAGS="$CFLAGS -w"
         export CXXFLAGS="$CXXFLAGS -w"
@@ -97,7 +97,7 @@ jobs:
     # see https://github.com/jirutka/setup-alpine/pull/22
     runs-on: ubuntu-24.04-arm
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
 
     - name: Setup latest Alpine Linux
       uses: jirutka/setup-alpine@v1
@@ -136,7 +136,7 @@ jobs:
         CC: "sccache clang"
         CXX: "sccache clang++"
         LD: ld.lld
-        AR: llvm-ar
+        AR: llvm20-ar
       run: |
         export CFLAGS="$CFLAGS -w"
         export CXXFLAGS="$CXXFLAGS -w"
@@ -185,7 +185,7 @@ jobs:
     # see https://github.com/jirutka/setup-alpine/pull/22
     runs-on: ubuntu-24.04-arm
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
 
     - name: Setup latest Alpine Linux
       uses: jirutka/setup-alpine@v1
@@ -224,7 +224,7 @@ jobs:
         CC: "sccache clang"
         CXX: "sccache clang++"
         LD: ld.lld
-        AR: llvm-ar
+        AR: llvm20-ar
         # Work around an openssl problem
         CFLAGS:   "-U__ILP32__"
         CXXFLAGS: "-U__ILP32__"
