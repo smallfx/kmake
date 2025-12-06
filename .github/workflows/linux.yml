@@ -45,8 +45,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang20"
-        CXX: "sccache clang++20"
+        CC: "sccache clang-20"
+        CXX: "sccache clang++-20"
         LD: ld.lld
         AR: llvm20-ar
       run: |
@@ -133,8 +133,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang20"
-        CXX: "sccache clang++20"
+        CC: "sccache clang-20"
+        CXX: "sccache clang++-20"
         LD: ld.lld
         AR: llvm20-ar
       run: |
@@ -221,8 +221,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang20"
-        CXX: "sccache clang++20"
+        CC: "sccache clang-20"
+        CXX: "sccache clang++-20"
         LD: ld.lld
         AR: llvm20-ar
         # Work around an openssl problem
