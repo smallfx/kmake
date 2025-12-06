@@ -29,7 +29,7 @@ jobs:
           linux-headers
           git
           bash
-          clang
+          clang20
           llvm20
           ninja-build
           ninja-is-really-ninja
@@ -45,8 +45,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang"
-        CXX: "sccache clang++"
+        CC: "sccache clang20"
+        CXX: "sccache clang++20"
         LD: ld.lld
         AR: llvm20-ar
       run: |
@@ -112,7 +112,7 @@ jobs:
           linux-headers
           git
           bash
-          clang
+          clang20
           llvm20
           ninja-build
           ninja-is-really-ninja
@@ -133,8 +133,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang"
-        CXX: "sccache clang++"
+        CC: "sccache clang20"
+        CXX: "sccache clang++20"
         LD: ld.lld
         AR: llvm20-ar
       run: |
@@ -200,7 +200,7 @@ jobs:
           linux-headers
           git
           bash
-          clang
+          clang20
           llvm20
           ninja-build
           ninja-is-really-ninja
@@ -221,8 +221,8 @@ jobs:
 
     - name: Build in Alpine chroot
       env:
-        CC: "sccache clang"
-        CXX: "sccache clang++"
+        CC: "sccache clang20"
+        CXX: "sccache clang++20"
         LD: ld.lld
         AR: llvm20-ar
         # Work around an openssl problem
