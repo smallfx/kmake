@@ -1103,6 +1103,7 @@ export async function run(options: any, loglog: any): Promise<string> {
 			) {
 			let vsvars: string = null;
 			const bits = dothemath ? '64' : '32';
+			const vswhere = path.join(process.env['ProgramFiles(x86)'], 'Microsoft Visual Studio', 'Installer', 'vswhere.exe');
 			switch (options.visualstudio) {
 				case VisualStudioVersion.VS2010:
 					if (process.env.VS100COMNTOOLS) {
@@ -1124,13 +1125,41 @@ export async function run(options: any, loglog: any): Promise<string> {
 						vsvars = process.env.VS140COMNTOOLS + '\\vsvars' + bits + '.bat';
 					}
 					break;
-				default:
-					const vswhere = path.join(process.env['ProgramFiles(x86)'], 'Microsoft Visual Studio', 'Installer', 'vswhere.exe');
+				case VisualStudioVersion.VS2017: {
+					const varspath = child_process.execFileSync(vswhere, ['-products', '*', '-version', '[15.0,16.0)', '-find', 'VC\\Auxiliary\\Build\\vcvars' + bits + '.bat'], {encoding: 'utf8'}).trim();
+					if (fs.existsSync(varspath)) {
+						vsvars = varspath;
+					}
+					break;
+				}
+				case VisualStudioVersion.VS2019: {
+					const varspath = child_process.execFileSync(vswhere, ['-products', '*', '-version', '[16.0,17.0)', '-find', 'VC\\Auxiliary\\Build\\vcvars' + bits + '.bat'], {encoding: 'utf8'}).trim();
+					if (fs.existsSync(varspath)) {
+						vsvars = varspath;
+					}
+					break;
+				}
+				case VisualStudioVersion.VS2022: {
+					const varspath = child_process.execFileSync(vswhere, ['-products', '*', '-version', '[17.0,18.0)', '-find', 'VC\\Auxiliary\\Build\\vcvars' + bits + '.bat'], {encoding: 'utf8'}).trim();
+					if (fs.existsSync(varspath)) {
+						vsvars = varspath;
+					}
+					break;
+				}
+				case VisualStudioVersion.VS2026: {
+					const varspath = child_process.execFileSync(vswhere, ['-products', '*', '-version', '[18.0,19.0)', '-find', 'VC\\Auxiliary\\Build\\vcvars' + bits + '.bat'], {encoding: 'utf8'}).trim();
+					if (fs.existsSync(varspath)) {
+						vsvars = varspath;
+					}
+					break;
+				}
+				default: {
 					const varspath = child_process.execFileSync(vswhere, ['-products', '*', '-latest', '-find', 'VC\\Auxiliary\\Build\\vcvars' + bits + '.bat'], {encoding: 'utf8'}).trim();
 					if (fs.existsSync(varspath)) {
 						vsvars = varspath;
 					}
 					break;
+				}
 			}
 			if (vsvars !== null) {
 				const signing = ((options.customTarget && options.customTarget.baseTarget === Platform.WindowsApp) || options.target === Platform.WindowsApp) ? '/p:AppxPackageSigningEnabled=false' : '';
