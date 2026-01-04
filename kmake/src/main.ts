@@ -21,6 +21,7 @@ import { JsonExporter } from 'kmake/Exporters/JsonExporter';
 import { MesonExporter } from 'kmake/Exporters/MesonExporter';
 import { Compiler } from 'kmake/Compiler';
 import { Architecture } from 'kmake/Architecture';
+import { KompjutaExporter } from './Exporters/KompjutaExporter';
 
 let _global: any = global;
 _global.__base = __dirname + '/';
@@ -631,6 +632,7 @@ async function exportKoremakeProject(from: string, to: string, platform: string,
 	else if (platform === Platform.Wasm) exporter = new WasmExporter(options);
 	else if (platform === Platform.Linux || platform === Platform.Pi) exporter = new LinuxExporter(options);
 	else if (platform === Platform.FreeBSD) exporter = new FreeBSDExporter(options);
+	else if (platform === Platform.Kompjuta) exporter = new KompjutaExporter(options);
 	else if (platform === Platform.PS4 || platform === Platform.XboxOne || platform === Platform.Switch || platform === Platform.XboxSeries || platform === Platform.PS5 || platform === Platform.Switch2) {
 		let libsdir = path.join(from.toString(), 'backends');
 		if (!fs.existsSync(libsdir)) {
