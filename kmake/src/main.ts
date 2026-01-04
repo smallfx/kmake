@@ -19,7 +19,7 @@ import { VSCodeExporter } from 'kmake/Exporters/VSCodeExporter';
 import { FreeBSDExporter } from 'kmake/Exporters/FreeBSDExporter';
 import { JsonExporter } from 'kmake/Exporters/JsonExporter';
 import { MesonExporter } from 'kmake/Exporters/MesonExporter';
-import { KompjutaExporter } from './Exporters/KompjutaExporter';
+import { KompjutaExporter } from 'kmake/Exporters/KompjutaExporter';
 import { Compiler } from 'kmake/Compiler';
 import { Architecture } from 'kmake/Architecture';
 
