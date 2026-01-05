@@ -64,6 +64,8 @@ function fromPlatform(platform: string): string {
 			return 'FreeBSD';
 		case Platform.Wasm:
 			return 'Web Assembly';
+		case Platform.Kompjuta:
+			return 'Kompjuta';
 		default:
 			throw 'Unknown platform ' + platform + '.';
 	}
