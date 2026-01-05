@@ -1061,7 +1061,7 @@ export async function run(options: any, loglog: any): Promise<string> {
 		const dothemath = is64bit();
 		let make: child_process.ChildProcess = null;
 
-		if (isPlatform(options, Platform.Linux) || isPlatform(options, Platform.Wasm) || isPlatform(options, Platform.Pi) || isPlatform(options, Platform.Emscripten)) {
+		if (isPlatform(options, Platform.Linux) || isPlatform(options, Platform.Wasm) || isPlatform(options, Platform.Pi) || isPlatform(options, Platform.Emscripten) || isPlatform(options, Platform.Kompjuta)) {
 			make = child_process.spawn('ninja', [], { cwd: path.join(options.to, options.buildPath) });
 		}
 		else if (isPlatform(options, Platform.FreeBSD)) {
@@ -1200,7 +1200,7 @@ export async function run(options: any, loglog: any): Promise<string> {
 					throw 'Run Error (code ' + err.code + ')';
 				}
 				else {
-					if (isPlatform(options, Platform.Linux) || isPlatform(options, Platform.Wasm) || isPlatform(options, Platform.Pi) || isPlatform(options, Platform.Emscripten)) {
+					if (isPlatform(options, Platform.Linux) || isPlatform(options, Platform.Wasm) || isPlatform(options, Platform.Pi) || isPlatform(options, Platform.Emscripten) || isPlatform(options, Platform.Kompjuta)) {
 						log.error('Ninja could not be run, falling back to make.');
 						make = child_process.spawn('make', ['-j', Options.cores.toString()], { cwd: path.join(options.to, options.buildPath) });
 						try {
