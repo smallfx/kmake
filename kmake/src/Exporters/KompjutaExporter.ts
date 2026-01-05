@@ -14,7 +14,7 @@ export class KompjutaExporter extends Exporter {
 	constructor(options: any) {
 		super(options);
 		
-		let flags = '--target=riscv64-unknown-elf -march=rv64im -mabi=lp64 -Os -ffreestanding -fno-builtin -nostdlib -nostartfiles -mno-relax "-Wl,--no-relax"';
+		let flags = '--target=riscv64-unknown-elf -march=rv64imfd -mabi=lp64d -Os -ffreestanding -fno-builtin -nostdlib -nostartfiles -mno-relax "-Wl,--no-relax"';
 
 		let outputExtension = '.elf';
 
