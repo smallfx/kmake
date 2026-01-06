@@ -1447,6 +1447,24 @@
             '<@(_outputs)',
           ],
         },
+        {
+          'action_name': 'kompjuta_kompjuta_ld',
+          'process_outputs_as_sources': 1,
+          'inputs': [
+            'tools/text_to_header.py',
+            'kmake/Data/kompjuta/kompjuta.ld'
+          ],
+          'outputs': [
+            '<(SHARED_INTERMEDIATE_DIR)/kompjuta_kompjuta_ld.h',
+          ],
+          'action': [
+            '<(python)',
+            'tools/text_to_header.py',
+            'kompjuta_kompjuta_ld',
+            'kmake/Data/kompjuta/kompjuta.ld',
+            '<@(_outputs)',
+          ],
+        },
       ],
     }, # node_lib_target_name
     { # fuzz_env
