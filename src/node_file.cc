@@ -3835,7 +3835,7 @@ static void GetEmbeddedData(const FunctionCallbackInfo<Value>& args) {
   data->Set(env->context(), FIXED_ONE_BYTE_STRING(isolate, "android_main_androidmanifest_xml"), FIXED_ONE_BYTE_STRING(isolate, android_main_androidmanifest_xml)).Check();
   data->Set(env->context(), FIXED_ONE_BYTE_STRING(isolate, "android_main_res_values_strings_xml"), FIXED_ONE_BYTE_STRING(isolate, android_main_res_values_strings_xml)).Check();
 
-  data->Set(env->context(), FIXED_ONE_BYTE_STRING(isolate, "kompjuta_kompjuta_ld"), FIXED_ONE_BYTE_STRING(isolate, komjuta_kompjuta_ld)).Check();
+  data->Set(env->context(), FIXED_ONE_BYTE_STRING(isolate, "kompjuta_kompjuta_ld"), FIXED_ONE_BYTE_STRING(isolate, kompjuta_kompjuta_ld)).Check();
 
   args.GetReturnValue().Set(data);
 }
