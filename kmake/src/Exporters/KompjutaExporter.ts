@@ -16,8 +16,8 @@ export class KompjutaExporter extends Exporter {
 	constructor(options: any) {
 		super(options);
 		
-		const cFlags = '--target=riscv64-unknown-elf -march=rv64imfd -mabi=lp64d -Os -ffreestanding -fno-builtin -ffunction-sections -fdata-sections -nostdlib -mno-relax';
-		const linkerFlags = '--target=riscv64-unknown-elf -march=rv64imfd -mabi=lp64d -Os -ffreestanding -fno-builtin -ffunction-sections -fdata-sections -nostdlib -mno-relax -fuse-ld=lld "-Wl,--no-relax,--gc-sections,-Map,link.map,-T,kompjuta.ld"';
+		const cFlags = '--target=riscv64-unknown-elf -march=rv64imfdv_zvl1024b -mabi=lp64d -Os -ffreestanding -fno-builtin -ffunction-sections -fdata-sections -nostdlib -mno-relax';
+		const linkerFlags = '--target=riscv64-unknown-elf -march=rv64imfdv_zvl1024b -mabi=lp64d -Os -ffreestanding -fno-builtin -ffunction-sections -fdata-sections -nostdlib -mno-relax -fuse-ld=lld "-Wl,--no-relax,--gc-sections,-Map,link.map,-T,kompjuta.ld"';
 
 		const outputExtension = '.elf';
 
