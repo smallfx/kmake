@@ -714,6 +714,9 @@ export class VisualStudioExporter extends Exporter {
 		this.p('</Link>', indent + 1);
 		this.p('<Manifest>', indent + 1);
 		this.p('<EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>', indent + 2);
+		if (Options.visualStudioVersion == VisualStudioVersion.VS2026) {
+			this.p("<EnableSegmentHeap>true</EnableSegmentHeap>", indent + 2);
+		}
 		this.p('</Manifest>', indent + 1);
 
 		this.p('</ItemDefinitionGroup>', indent);
@@ -1093,6 +1096,9 @@ export class VisualStudioExporter extends Exporter {
 				this.p('</ClCompile>', 2);
 				this.p('<Manifest>', 2);
 				this.p('<EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>', 3);
+				if (Options.visualStudioVersion == VisualStudioVersion.VS2026) {
+					this.p("<EnableSegmentHeap>true</EnableSegmentHeap>", 3);
+				}
 				this.p('</Manifest>', 2);
 				this.p('</ItemDefinitionGroup>', 1);
 			}
